@@ -1,6 +1,6 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-chai-matchers";
-import "@nomicfoundation/hardhat-ethers";
+import "@nomiclabs/hardhat-ethers";
 import "@typechain/hardhat";
 import "hardhat-deploy";
 
@@ -22,9 +22,13 @@ const config: HardhatUserConfig = {
       },
     ],
   },
+  mocha: {
+    bail: true,
+    timeout: 300000,
+  },
   typechain: {
     outDir: "typechain",
-    target: "ethers-v6",
+    target: "ethers-v5",
   },
   namedAccounts: {
     deployer: {

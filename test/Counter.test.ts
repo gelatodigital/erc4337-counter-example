@@ -1,15 +1,18 @@
 import { deployments, ethers } from "hardhat";
 import { Counter, Counter__factory } from "../typechain";
-import { ECDSAProvider } from "@zerodev/sdk";
 import { assert, expect } from "chai";
+import {
+  ZeroDevEthersProvider,
+  convertEthersSignerToAccountSigner,
+} from "@zerodev/sdk";
 
 import * as dotenv from "dotenv";
 dotenv.config({ path: __dirname + "/.env" });
 
 describe("Counter", () => {
   let counter: Counter;
-  let provider: ECDSAProvider;
-  let chainId: bigint;
+  let provider: ZeroDevEthersProvider<"ECDSA">;
+  let chainId: number;
 
   before(async () => {
     const ONEBALANCE_API_KEY = process.env.ONEBALANCE_API_KEY;
@@ -21,8 +24,6 @@ describe("Counter", () => {
     if (!ZERODEV_PROJECT_ID)
       throw new Error("ZERODEV_PROJECT_ID missing in .env");
 
-    await deployments.fixture();
-
     const { address } = await deployments.get("Counter");
     counter = Counter__factory.connect(address, ethers.provider);
 
@@ -30,13 +31,13 @@ describe("Counter", () => {
     const network = await ethers.provider.getNetwork();
     chainId = network.chainId;
 
-    provider = await ECDSAProvider.init({
+    provider = await ZeroDevEthersProvider.init("ECDSA", {
       projectId: ZERODEV_PROJECT_ID,
-      usePaymaster: false,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      owner: wallet as any,
+      usePaymaster: false, // no on-chain paymaster required
+      owner: convertEthersSignerToAccountSigner(wallet),
       opts: {
         providerConfig: {
+          // use Gelato bundler
           rpcUrl: `${GELATO_API_URL}/bundlers/${chainId}/rpc?sponsorApiKey=${ONEBALANCE_API_KEY}`,
         },
       },
@@ -44,14 +45,15 @@ describe("Counter", () => {
   });
 
   const increment = async () => {
-    const tx = await counter.increment.populateTransaction();
+    const tx = await counter.populateTransaction.increment();
 
-    const { hash } = await provider.sendUserOperation(
+    const { hash } = await provider.getAccountSigner().sendUserOperation(
       {
         target: tx.to as `0x{string}`,
         data: tx.data as `0x{string}`,
       },
       {
+        // avoid EntryPoint fee payment
         maxFeePerGas: 0n,
       },
     );
@@ -61,7 +63,9 @@ describe("Counter", () => {
     let receipt;
     while (!receipt) {
       await new Promise((r) => setTimeout(r, 3000));
-      receipt = await provider.getUserOperationReceipt(hash as `0x{string}`);
+      receipt = await provider.accountProvider.getUserOperationReceipt(
+        hash as `0x{string}`
+      );
     }
 
     if (!receipt.success) {
@@ -72,22 +76,22 @@ describe("Counter", () => {
   };
 
   it("chainId", async () => {
-    await expect(chainId).to.equal(BigInt(provider.rpcClient.chain.id));
+    await expect(chainId).to.equal(provider.accountProvider.rpcClient.chain.id);
   });
 
   it("deploy account & increment counter", async () => {
     await increment();
 
-    const address = await provider.getAddress();
+    const address = await provider.getAccountProvider().getAddress();
     const count = await counter.counter(address);
     expect(count).to.equal(1n);
-  }).timeout(300000);
+  });
 
   it("increment counter", async () => {
     await increment();
 
-    const address = await provider.getAddress();
+    const address = await provider.getAccountProvider().getAddress();
     const count = await counter.counter(address);
     expect(count).to.equal(2n);
-  }).timeout(300000);
+  });
 });
