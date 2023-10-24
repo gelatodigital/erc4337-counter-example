@@ -12,10 +12,12 @@ describe("Counter", () => {
   let chainId: bigint;
 
   before(async () => {
-    const ONEBALANCE_KEY = process.env.ONEBALANCE_KEY;
+    const ONEBALANCE_API_KEY = process.env.ONEBALANCE_API_KEY;
     const ZERODEV_PROJECT_ID = process.env.ZERODEV_PROJECT_ID;
+    const GELATO_API_URL =
+      process.env.GELATO_API_URL ?? "https://api.gelato.digital";
 
-    if (!ONEBALANCE_KEY) throw new Error("ONEBALANCE_KEY missing in .env");
+    if (!ONEBALANCE_API_KEY) throw new Error("ONEBALANCE_KEY missing in .env");
     if (!ZERODEV_PROJECT_ID)
       throw new Error("ZERODEV_PROJECT_ID missing in .env");
 
@@ -35,7 +37,7 @@ describe("Counter", () => {
       owner: wallet as any,
       opts: {
         providerConfig: {
-          rpcUrl: `https://api.staging.gelato.digital/bundlers/${chainId}/rpc?sponsorApiKey=${ONEBALANCE_KEY}`,
+          rpcUrl: `${GELATO_API_URL}/bundlers/${chainId}/rpc?sponsorApiKey=${ONEBALANCE_API_KEY}`,
         },
       },
     });
@@ -51,7 +53,7 @@ describe("Counter", () => {
       },
       {
         maxFeePerGas: 0n,
-      }
+      },
     );
 
     console.log("userOpHash:", hash);
