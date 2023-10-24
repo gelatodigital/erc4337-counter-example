@@ -13,6 +13,5 @@ const func: DeployFunction = async () => {
 };
 
 func.tags = ["Counter"];
-//func.skip = async () => !isHardhat;
 
 export default func;

@@ -22,8 +22,6 @@ describe("Counter", () => {
     if (!ZERODEV_PROJECT_ID)
       throw new Error("ZERODEV_PROJECT_ID missing in .env");
 
-    await deployments.fixture();
-
     const { address } = await deployments.get("Counter");
     counter = Counter__factory.connect(address, ethers.provider);
 
