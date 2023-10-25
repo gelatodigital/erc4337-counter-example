@@ -1,54 +1,27 @@
 {
-  "name": "erc4337-counter-examples",
+  "name": "erc4337-counter-example",
   "version": "0.0.0",
-  "description": "ERC-4337 Counter Examples",
+  "description": "ERC-4337 Counter Example",
   "scripts": {
-    "build": "yarn install && yarn compile && npx tsc",
+    "start": "yarn ts-node src",
+    "build": "yarn install && yarn types && npx tsc",
     "clean": "yarn hardhat clean && rm -rf dist",
-    "compile": "npx hardhat compile --force",
-    "deploy": "npx hardhat deploy",
-    "test": "npx hardhat test",
-    "format": "prettier --write '*/**/*.*{js,json,md,ts}'",
-    "format:check": "prettier --check '*/**/*.*{js,json,md,ts}'",
-    "lint": "eslint --cache . && yarn lint:sol",
-    "lint:ts": "eslint -c .eslintrc.json --ext \"**/*.ts\" \"**/*.test.ts\"",
-    "lint:sol": "solhint 'contracts/**/*.sol'",
-    "postinstall": "yarn husky install"
+    "types": "yarn typechain --target=ethers-v5 --out-dir src/contracts/types src/contracts/abis/*.json"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@nomicfoundation/hardhat-chai-matchers": "1.0.6",
-    "@nomiclabs/hardhat-ethers": "2.2.3",
+  "license": "MIT",
+  "dependencies": {
     "@tsconfig/recommended": "1.0.3",
     "@typechain/ethers-v5": "11.1.2",
-    "@typechain/hardhat": "9.1.0",
-    "@types/chai": "4.3.9",
-    "@types/mocha": "10.0.3",
-    "@typescript-eslint/eslint-plugin": "6.9.0",
-    "@typescript-eslint/parser": "6.9.0",
-    "@zerodev/sdk": "4.0.30",
-    "chai": "4.3.10",
+    "@types/node": "^20.8.8",
+    "@zerodev/sdk": "4.0.31",
     "dotenv": "16.3.1",
-    "eslint": "8.52.0",
-    "eslint-config-prettier": "9.0.0",
-    "eslint-plugin-prettier": "5.0.1",
-    "ethers": "5.7.2",
-    "hardhat": "2.18.2",
-    "hardhat-deploy": "0.11.43",
-    "husky": "8.0.3",
-    "lint-staged": "15.0.2",
-    "prettier": "3.0.3",
-    "prettier-plugin-solidity": "1.1.3",
-    "solhint": "3.6.2",
-    "solhint-plugin-prettier": "0.0.5",
+    "ethers": "5.7.2"
+  },
+  "devDependencies": {
     "ts-node": "10.9.1",
     "typechain": "8.3.2",
     "typescript": "5.2.2"
-  },
-  "lint-staged": {
-    "*.*{js,json,md,ts,sol,yml,yaml}": "prettier --write",
-    "*.*{ts,js}": "eslint -c .eslintrc.json"
   }
 }
