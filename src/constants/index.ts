@@ -8,5 +8,5 @@ export const ADDRESSES: { [key in ChainId]: { counter: string } } = {
   [ChainId.Mumbai]: { counter: "0xD2D3248F89Fd11117496B3258Db161a834dbFb0b" },
 };
 
-export const GELATO_API = "https://api.staging.gelato.digital";
+export const GELATO_API = "https://api.gelato.digital";
 export const ZERODEV_API = "https://prod-api.zerodev.app";
