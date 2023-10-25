@@ -1,6 +1,4 @@
+src/contracts/types
 node_modules
 .env
-typechain
 dist
-artifacts
-cache
