@@ -8,10 +8,10 @@ dotenv.config();
 
 const main = async () => {
 	const ONEBALANCE_API_KEY = process.env.ONEBALANCE_API_KEY;
-   const ZERODEV_PROJECT_ID = process.env.ZERODEV_PROJECT_ID;
+	const ZERODEV_PROJECT_ID = process.env.ZERODEV_PROJECT_ID;
 
 	if (!ONEBALANCE_API_KEY) throw new Error("ONEBALANCE_API_KEY missing in .env");
-   if (!ZERODEV_PROJECT_ID) throw new Error("ZERODEV_PROJECT_ID missing in .env");
+	if (!ZERODEV_PROJECT_ID) throw new Error("ZERODEV_PROJECT_ID missing in .env");
 
 	const wallet = ethers.Wallet.createRandom();
 
