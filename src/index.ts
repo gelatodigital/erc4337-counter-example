@@ -26,13 +26,17 @@ const main = async () => {
 
   const counter = ADDRESSES[chainId as ChainId].counter;
   const increment = ICounter.encodeFunctionData("increment");
-
   const account = provider.getAccountProvider();
-  
-  const { hash } = await account.sendUserOperation({
+
+  const userOp = {
     target: counter as `0x{string}`,
     data: increment as `0x{string}`,
-  });
+  };
+  
+  const { hash } = await account.sendUserOperation(
+    [userOp, userOp],
+    { maxFeePerGas: 0n, maxPriorityFeePerGas: 0n }
+  );
 
   console.log(`userOpHash: ${hash}`);
 
