@@ -547,10 +547,10 @@
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.7.3.tgz#3e51a17e291d01d17d3fc61422015a933af7a08f"
   integrity sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==
 
-"@zerodev/sdk@4.3.4":
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/@zerodev/sdk/-/sdk-4.3.4.tgz#56f27929cff6dc2c47751c70ff53c1f846a27690"
-  integrity sha512-Rz49GzMR1A80AmUBPAz2UQxSWRHMHRerzbxlqXn3L3g5Dtcj2g0lnc0re7cptJmzdXcfgIjzY70LQz4neB3EHQ==
+"@zerodev/sdk@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@zerodev/sdk/-/sdk-4.4.0.tgz#290800c1684dc48fe2c45f91ade1828e5d018f1f"
+  integrity sha512-i2qPZqnO8vJ4s2ajruNzfTMFgm3nn4LS/S2AXIPcKBL3NOLK/PtsYpTi4JCBb/8y350jczr051h59fbRMk4uQA==
   dependencies:
     "@alchemy/aa-core" "0.1.0-alpha.23"
     "@alchemy/aa-ethers" "0.1.0-alpha.23"
