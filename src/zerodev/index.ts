@@ -1,9 +1,10 @@
 import { ethers } from "ethers";
-import { ICounter } from "./contracts";
-import { ZERODEV_API, ADDRESSES, ChainId } from "./constants";
+import { ICounter } from "../contracts";
+import { ZERODEV_API, ADDRESSES, ChainId } from "../constants";
 import { ZeroDevEthersProvider, convertEthersSignerToAccountSigner } from "@zerodev/sdk";
 
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 const main = async () => {
