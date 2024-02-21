@@ -14,7 +14,16 @@
    ```
    cp .env.example .env
    ```
-4. Increment counter
+## Different solutions
+1. Zerodev 
    ```
-   yarn start
+   yarn zerodev
+   ```
+2. Pimlico Safe
+   ```
+   yarn pimlico
+   ```
+3. Gelato Safe
+   ```
+   yarn gelato
    ```

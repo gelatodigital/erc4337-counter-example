@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "description": "ERC-4337 Counter Example",
   "scripts": {
-    "start": "yarn ts-node src",
-    "pimlico": "yarn ts-node src/pimlico.ts",
+    "zerodev": "yarn ts-node src/zerodev",
+    "pimlico": "yarn ts-node src/pimlico",
     "gelato": "yarn ts-node src/gelato",
     "build": "yarn install && yarn types && npx tsc",
     "clean": "yarn hardhat clean && rm -rf dist",
