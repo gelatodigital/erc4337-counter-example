@@ -32,11 +32,9 @@ const main = async () => {
     target: counter as `0x{string}`,
     data: increment as `0x{string}`,
   };
-  
-  const { hash } = await account.sendUserOperation(
-    [userOp, userOp],
-    { maxFeePerGas: 0n, maxPriorityFeePerGas: 0n }
-  );
+
+  // can batch multiple UserOps by passing in an array instead
+  const { hash } = await account.sendUserOperation(userOp);
 
   console.log(`userOpHash: ${hash}`);
 
