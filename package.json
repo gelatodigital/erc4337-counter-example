@@ -17,7 +17,7 @@
     "@tsconfig/recommended": "1.0.3",
     "@typechain/ethers-v5": "11.1.2",
     "@types/node": "20.10.0",
-    "@zerodev/sdk": "^4.4.0",
+    "@zerodev/sdk": "4.7.8",
     "abitype": "^1.0.0",
     "dotenv": "16.3.1",
     "ethers": "5.7.2",
