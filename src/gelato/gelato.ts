@@ -1,6 +1,6 @@
 import type { Address } from 'abitype'
-import { fromHex, parseEther, type Hex, type PrivateKeyAccount, formatEther } from 'viem'
-import { EIP712_SAFE_OPERATION_TYPE, encodeCallData } from './safe'
+import { fromHex, type Hex, type PrivateKeyAccount } from 'viem'
+import { EIP712_SAFE_OPERATION_TYPE } from './safe'
 
 import { setTimeout } from 'timers/promises'
 
@@ -22,9 +22,9 @@ export type UserOperation = {
   // Sponsored User Operation Data
  
   export type gasData = {
-    preVerificationGas: any
-    callGasLimit: any
-    verificationGasLimit: any
+    preVerificationGas: `0x${string}`
+    callGasLimit: `0x${string}`
+    verificationGasLimit: `0x${string}`
   }
 
 
@@ -56,7 +56,7 @@ export const getGasValuesFromGelato = async (
     }),
   }
 
-  let responseValues
+  let responseValues: any
   await fetch(`https://api.gelato.digital//bundlers/${chainID}/rpc?sponsorApiKey=${apiKey}`, gasOptions)
     .then((response) => response.json())
     .then((response) => (responseValues = response))
@@ -66,6 +66,8 @@ export const getGasValuesFromGelato = async (
   let rvGas
   if (responseValues && responseValues['result']) {
     rvGas = responseValues['result'] as gasData
+  } else {
+    console.log('Error or no result from Gelato:', responseValues?.error || responseValues)
   }
 
   return rvGas
@@ -95,9 +97,9 @@ export const submitUserOperationGelato = async (
           callData: sponsoredUserOperation.callData,
           signature: sponsoredUserOperation.signature,
           paymasterAndData: sponsoredUserOperation.paymasterAndData,
-          callGasLimit: sponsoredUserOperation.callGasLimit,
-          verificationGasLimit: sponsoredUserOperation.verificationGasLimit,
-          preVerificationGas: sponsoredUserOperation.preVerificationGas,
+          callGasLimit: '0x' + sponsoredUserOperation.callGasLimit.toString(16),
+          verificationGasLimit: '0x' + sponsoredUserOperation.verificationGasLimit.toString(16),
+          preVerificationGas: '0x' + sponsoredUserOperation.preVerificationGas.toString(16),
           maxFeePerGas: '0x' + sponsoredUserOperation.maxFeePerGas.toString(16),
           maxPriorityFeePerGas: '0x' + sponsoredUserOperation.maxPriorityFeePerGas.toString(16),
         },
